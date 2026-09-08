@@ -79,6 +79,11 @@ footer .footer-legal a:any-link {
   text-decoration: underline;
 }
 
+/* mobile base: brand nav wraps, social row wraps; content stacks vertically */
+footer .footer-brand ul {
+  gap: 10px 20px;
+}
+
 @media (width >= 900px) {
   footer .footer > div {
     padding: 48px 32px;
