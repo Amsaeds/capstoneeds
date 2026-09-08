@@ -38,7 +38,7 @@ footer .footer-brand ul {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 24px;
+  gap: 10px 20px;
 }
 
 footer .footer-brand ul li {
@@ -77,11 +77,6 @@ footer .footer-legal p {
 footer .footer-legal a:any-link {
   color: #fff;
   text-decoration: underline;
-}
-
-/* mobile base: brand nav wraps, social row wraps; content stacks vertically */
-footer .footer-brand ul {
-  gap: 10px 20px;
 }
 
 @media (width >= 900px) {
