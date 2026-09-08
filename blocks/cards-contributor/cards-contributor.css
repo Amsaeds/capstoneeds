@@ -60,14 +60,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
+  width: 36px;
   height: 36px;
-  padding: 0 10px;
   background-color: var(--text-color);
   color: #fff;
-  font-size: 11px;
-  font-weight: 600;
   text-decoration: none;
+}
+
+.cards-contributor .cards-contributor-social a svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .cards-contributor .cards-contributor-social a:hover {
