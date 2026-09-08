@@ -1,0 +1,27 @@
+.cards-contributor > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
+}
+
+.cards-contributor > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
+}
+
+.cards-contributor .cards-contributor-card-body {
+  margin: 16px;
+}
+
+.cards-contributor .cards-contributor-card-image {
+  line-height: 0;
+}
+
+.cards-contributor > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

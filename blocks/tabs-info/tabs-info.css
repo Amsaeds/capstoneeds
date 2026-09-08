@@ -1,0 +1,65 @@
+.tabs-info .tabs-info-list {
+  display: flex;
+  gap: 0.5ch;
+  max-width: 100%;
+  font-size: var(--body-font-size-xs);
+  overflow-x: auto;
+}
+
+@media (width >= 600px) {
+  .tabs-info .tabs-info-list {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+@media (width >= 900px) {
+  .tabs-info .tabs-info-list {
+    font-size: var(--body-font-size-m);
+  }
+}
+
+.tabs-info .tabs-info-list button {
+  flex: 0 0 max-content;
+  margin: 0;
+  border: 1px solid #dadada;
+  border-radius: 0;
+  padding: 0.5em;
+  background-color: var(--light-color);
+  color: initial;
+  font-weight: bold;
+  line-height: unset;
+  text-align: initial;
+  text-overflow: unset;
+  overflow: unset;
+  white-space: unset;
+  transition: background-color 0.2s;
+}
+
+.tabs-info .tabs-info-list button p {
+  margin: 0;
+}
+
+
+.tabs-info .tabs-info-list button[aria-selected='true'] {
+  border-color: var(--text-color);
+  background-color: var(--text-color);
+  color: var(--background-color);
+  cursor: initial;
+}
+
+.tabs-info .tabs-info-panel h2,
+.tabs-info .tabs-info-panel h3 {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+}
+
+.tabs-info .tabs-info-panel {
+  margin-top: -1px;
+  padding: 24px;
+  border: 1px solid #dadada;
+  overflow: auto;
+}
+
+.tabs-info .tabs-info-panel[aria-hidden='true'] {
+  display: none;
+}

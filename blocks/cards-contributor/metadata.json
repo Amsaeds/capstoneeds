@@ -1,0 +1,40 @@
+{
+  "variantName": "cards-contributor",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-09-08T10:20:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/ca/en/about-us.html",
+    "originPage": "About Us content-landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "team",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "portrait image | name heading + role line + social links",
+    "buttonCount": 3,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "team / contributor / people grids",
+      "cards with a portrait, name, role eyebrow, and a row of social icon links",
+      "'Our Contributors' and 'WKND Guides' style person listings"
+    ],
+    "notSuitableFor": [
+      "article/adventure teaser grids with linked titles + descriptions (use cards-teaser)",
+      "text-only cards without images",
+      "side-by-side feature layouts (use columns-featured)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/ca/en/about-us", "/ca/en/magazine/arctic-surfing"],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-08T10:20:00.000Z",
+    "note": "Used twice on the About Us page (Our Contributors 4-up grid and WKND Guides 3-up grid), and reused for the single-author byline/contributor card on the arctic-surfing magazine article."
+  }
+}

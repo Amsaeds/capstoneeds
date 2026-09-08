@@ -1,20 +1,86 @@
+/* WKND footer — full-bleed dark bar, light text */
 footer {
-  background-color: var(--light-color);
+  background-color: var(--brand-dark-color, #202020);
+  color: var(--brand-light-color, #ebebeb);
   font-size: var(--body-font-size-xs);
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  padding: 40px 24px;
 }
 
 footer .footer p {
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+
+footer .footer a:any-link {
+  color: var(--brand-light-color, #ebebeb);
+  text-decoration: none;
+}
+
+footer .footer a:hover {
+  text-decoration: underline;
+}
+
+/* brand + primary nav */
+footer .footer-brand img {
+  width: 140px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+footer .footer-brand ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+footer .footer-brand ul li {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* social */
+footer .footer-social h3 {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: var(--heading-font-size-s);
+  margin: 0 0 12px;
+}
+
+footer .footer-social ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+footer .footer-social a:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+/* legal / disclaimer */
+footer .footer-legal p {
+  color: #b0b0b0;
+  font-size: var(--body-font-size-xs);
+}
+
+footer .footer-legal a:any-link {
+  color: #fff;
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    padding: 48px 32px;
   }
 }

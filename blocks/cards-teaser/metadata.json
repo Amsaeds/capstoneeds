@@ -1,0 +1,42 @@
+{
+  "variantName": "cards-teaser",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-09-08T10:12:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/",
+    "originPage": "WKND homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "teaser",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image | title link + description",
+    "buttonCount": 0,
+    "imageCount": 4
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "article/adventure teaser grids",
+      "4-up card grids with image, linked title and short description",
+      "recent articles and 'where do you want to go' style listings"
+    ],
+    "notSuitableFor": [
+      "text-only cards without images",
+      "interactive/rotating content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/ca/en/adventures"
+    ],
+    "reuseCount": 3,
+    "lastUsed": "2026-09-08T00:00:00.000Z",
+    "note": "Used twice on the homepage (Recent Articles and Where do you want to go sections)."
+  }
+}

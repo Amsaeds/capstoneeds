@@ -1,0 +1,14 @@
+{
+  "type": "da",
+  "sites": {
+    "capstoneeds": {
+      "previewOrg": "amsaeds",
+      "previewSite": "capstoneeds",
+      "contentHostUrl": "https://content.da.live/amsaeds/capstoneeds/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  },
+  "features": [
+    "site-planning"
+  ]
+}
