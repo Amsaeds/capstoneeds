@@ -1,0 +1,38 @@
+{
+  "variantName": "tabs-filter",
+  "baseBlock": "tabs",
+  "version": "1.0.0",
+  "created": "2026-09-08T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/ca/en/adventures.html",
+    "originPage": "Adventures category listing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "category-filter",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "tab label per row (All/Climbing/Cycling/Skiing/Surfing/Travel); each tab panel wraps a card grid of listing items",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "category/filter tab bars on listing pages",
+      "tabs whose panels each contain a grid of teaser cards",
+      "content filtering across a set of items by category"
+    ],
+    "notSuitableFor": [
+      "detail-page body content split into Overview/Itinerary/What-to-Bring (use tabs-info)",
+      "tabs containing long-form mixed text/image/list content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/ca/en/adventures"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-08T00:00:00.000Z"
+  }
+}

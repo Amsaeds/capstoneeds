@@ -1,0 +1,50 @@
+/*
+ * brand.css — Brand design tokens extracted from https://wknd.site/
+ * Source of truth for colors, typography and spacing. Imported first by
+ * styles.css; consumed there via the project's design-token variables.
+ */
+
+:root {
+  /* fonts */
+  --brand-heading-font-family: "Asar", georgia, "Times New Roman", times, serif;
+  --brand-body-font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
+
+  /* colors */
+  --brand-background-color: #fff;
+  --brand-text-color: #202020;
+  --brand-link-color: #0045ff;
+  --brand-link-hover-color: #0035c7;
+
+  /* section variants */
+  --brand-light-color: #f5f5f5;
+  --brand-dark-color: #202020;
+
+  /* accent — WKND signature CTA */
+  --brand-accent-color: #ffea00;
+  --brand-accent-hover-color: #ebd800;
+
+  /* heading sizes — desktop */
+  --brand-heading-size-xxl: 50px;
+  --brand-heading-size-xl: 36px;
+  --brand-heading-size-l: 24px;
+  --brand-heading-size-m: 20px;
+  --brand-heading-size-s: 18px;
+  --brand-heading-size-xs: 16px;
+
+  /* heading sizes — mobile */
+  --brand-heading-size-xxl-mobile: 36px;
+  --brand-heading-size-xl-mobile: 28px;
+  --brand-heading-size-l-mobile: 24px;
+  --brand-heading-size-m-mobile: 20px;
+  --brand-heading-size-s-mobile: 18px;
+  --brand-heading-size-xs-mobile: 16px;
+
+  /* body sizes */
+  --brand-body-size-m: 18px;
+  --brand-body-size-s: 16px;
+  --brand-body-size-xs: 14px;
+
+  /* spacing */
+  --brand-nav-height: 64px;
+  --brand-content-max-width: 1200px;
+}

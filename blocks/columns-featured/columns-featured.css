@@ -1,0 +1,62 @@
+.columns-featured > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-featured img {
+  width: 100%;
+}
+
+/* WKND featured-article: eyebrow, serif heading, yellow CTA */
+.columns-featured h2,
+.columns-featured h3 {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+.columns-featured p {
+  color: var(--text-color);
+}
+
+.columns-featured a:any-link {
+  display: inline-block;
+  background-color: var(--brand-accent-color);
+  color: var(--text-color);
+  padding: 12px 32px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.columns-featured a:hover {
+  background-color: var(--brand-accent-hover-color);
+}
+
+.columns-featured > div > div {
+  order: 1;
+}
+
+.columns-featured > div > .columns-featured-img-col {
+  order: 0;
+}
+
+.columns-featured > div > .columns-featured-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-featured > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-featured > div > div {
+    flex: 1;
+    order: unset;
+  }
+}

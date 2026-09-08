@@ -1,0 +1,39 @@
+.cards-teaser > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
+}
+
+.cards-teaser > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
+}
+
+.cards-teaser .cards-teaser-card-body {
+  margin: 16px;
+}
+
+.cards-teaser .cards-teaser-card-body a:any-link {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.cards-teaser .cards-teaser-card-body p {
+  font-size: var(--body-font-size-xs);
+  color: var(--text-color);
+}
+
+.cards-teaser .cards-teaser-card-image {
+  line-height: 0;
+}
+
+.cards-teaser > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

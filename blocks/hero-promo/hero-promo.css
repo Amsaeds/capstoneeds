@@ -1,0 +1,70 @@
+.hero-promo-container .hero-promo-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-promo {
+  position: relative;
+  padding: 40px 24px;
+  min-height: 300px;
+}
+
+.hero-promo h1,
+.hero-promo h2,
+.hero-promo h3,
+.hero-promo h4,
+.hero-promo h5,
+.hero-promo h6,
+.hero-promo p {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--background-color);
+}
+
+.hero-promo.no-image * {
+  color: var(--text-color);
+}
+
+/* WKND: heading + copy in an overlaid content box with a yellow CTA */
+.hero-promo h2 {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+}
+
+.hero-promo a:any-link {
+  display: inline-block;
+  background-color: var(--brand-accent-color);
+  color: var(--text-color);
+  padding: 12px 32px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hero-promo a:hover {
+  background-color: var(--brand-accent-hover-color);
+}
+
+.hero-promo picture {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.hero-promo img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width >= 900px) {
+  .hero-promo {
+    padding: 40px 32px;
+  }
+}
