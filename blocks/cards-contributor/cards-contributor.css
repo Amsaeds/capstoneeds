@@ -45,3 +45,32 @@
   letter-spacing: 0.03em;
   color: var(--text-color);
 }
+
+/* social row: dark labeled buttons, centered under the role (WKND social bar) */
+.cards-contributor .cards-contributor-social {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 12px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.cards-contributor .cards-contributor-social a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 36px;
+  padding: 0 10px;
+  background-color: var(--text-color);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cards-contributor .cards-contributor-social a:hover {
+  background-color: var(--brand-accent-color);
+  color: var(--text-color);
+}
