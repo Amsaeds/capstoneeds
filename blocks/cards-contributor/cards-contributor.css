@@ -3,25 +3,45 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 32px;
 }
 
+/* WKND contributor card: centered round portrait, name, role — no card chrome */
 .cards-contributor > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
-}
-
-.cards-contributor .cards-contributor-card-body {
-  margin: 16px;
+  border: 0;
+  background: none;
+  text-align: center;
 }
 
 .cards-contributor .cards-contributor-card-image {
   line-height: 0;
 }
 
-.cards-contributor > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
+.cards-contributor .cards-contributor-card-image img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
   object-fit: cover;
+  margin: 0 auto;
+}
+
+.cards-contributor .cards-contributor-card-body {
+  margin: 16px 0 0;
+}
+
+.cards-contributor .cards-contributor-card-body h3 {
+  margin: 0 0 8px;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: var(--heading-font-size-s);
+}
+
+.cards-contributor .cards-contributor-card-body p {
+  margin: 0;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-color);
 }
