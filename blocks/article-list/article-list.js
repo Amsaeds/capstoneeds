@@ -3,13 +3,14 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 /**
  * Read "key | value" configuration rows from the block, then remove them.
  * Supported keys: path (prefix filter), limit (max cards), exclude (path to skip),
- * tabs (comma-separated category labels — renders a filter tab bar).
+ * tabs (comma-separated category labels — renders a filter tab bar),
+ * mode ("share" renders a "Share This Story" title+date list, no images).
  * @param {Element} block
- * @returns {{path:string, limit:number, exclude:string, tabs:string[]}}
+ * @returns {{path:string, limit:number, exclude:string, tabs:string[], mode:string}}
  */
 function readConfig(block) {
   const cfg = {
-    path: '', limit: 0, exclude: '', tabs: [],
+    path: '', limit: 0, exclude: '', tabs: [], mode: '',
   };
   [...block.children].forEach((row) => {
     const cells = row.children;
@@ -20,8 +21,56 @@ function readConfig(block) {
     else if (key === 'limit') cfg.limit = parseInt(value, 10) || 0;
     else if (key === 'exclude') cfg.exclude = value;
     else if (key === 'tabs') cfg.tabs = value.split(',').map((t) => t.trim()).filter(Boolean);
+    else if (key === 'mode') cfg.mode = value.toLowerCase();
   });
   return cfg;
+}
+
+/**
+ * Format an index date value (seconds/ms epoch or parseable string) as
+ * "Weekday, D Mon YYYY" (matching WKND). Returns '' when unavailable.
+ * @param {string|number} value
+ * @returns {string}
+ */
+function formatDate(value) {
+  if (!value) return '';
+  let d;
+  const num = Number(value);
+  if (!Number.isNaN(num) && num > 0) {
+    // query-index dates are epoch seconds
+    d = new Date(num < 1e12 ? num * 1000 : num);
+  } else {
+    d = new Date(value);
+  }
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', {
+    weekday: 'long', day: 'numeric', month: 'short', year: 'numeric',
+  });
+}
+
+/**
+ * Build one "share this story" row (title + optional date, no image).
+ * @param {{path:string, title:string, date:string}} row
+ * @returns {Element}
+ */
+function buildShareItem(row) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = row.path;
+  a.className = 'article-list-share-link';
+  const title = document.createElement('span');
+  title.className = 'article-list-share-title';
+  title.textContent = row.title || '';
+  a.append(title);
+  const dateText = formatDate(row.date);
+  if (dateText) {
+    const date = document.createElement('span');
+    date.className = 'article-list-share-date';
+    date.textContent = dateText;
+    a.append(date);
+  }
+  li.append(a);
+  return li;
 }
 
 /**
@@ -126,6 +175,17 @@ export default async function decorate(block) {
 
   if (rows.length === 0) {
     block.classList.add('article-list-empty');
+    return;
+  }
+
+  if (cfg.mode === 'share') {
+    block.classList.add('article-list-share');
+    const heading = document.createElement('p');
+    heading.className = 'article-list-share-heading';
+    heading.textContent = 'Share This Story';
+    const ul = document.createElement('ul');
+    rows.forEach((row) => ul.append(buildShareItem(row)));
+    block.append(heading, ul);
     return;
   }
 

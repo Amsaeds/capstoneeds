@@ -272,9 +272,16 @@ header nav .nav-locale-list {
 
 /* stylelint-disable-next-line no-descending-specificity */
 header nav .nav-locale-list li {
-  padding: 8px 12px;
+  padding: 14px 24px;
   font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid #333;
 }
+
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-locale-list li:last-child { border-bottom: 0; }
 
 /* stylelint-disable-next-line no-descending-specificity */
 header nav .nav-locale-list li a { color: #fff; }
@@ -283,16 +290,22 @@ header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
   display: block;
   position: absolute;
   right: 0;
-  top: calc(100% + 8px);
-  min-width: 140px;
+  top: calc(100% + 10px);
+  min-width: 260px;
   background: var(--brand-dark-color, #202020);
   border: 1px solid #333;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 35%);
   z-index: 3;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 header nav .nav-locale-list li:hover {
   background: #000;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-locale-list li a:hover {
+  color: var(--brand-accent-color);
 }
 
 /* ---- desktop: single main row (hamburger hidden), nav inline ---- */
