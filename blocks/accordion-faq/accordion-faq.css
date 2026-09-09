@@ -1,11 +1,19 @@
-/* FAQ page layout: accordion + intro (left), "Need more help?" (right sidebar).
+/* FAQ page layout: intro + accordion (left), "Need more help?" (right sidebar).
    The section's direct children are: intro DCW, accordion wrapper, help DCW. */
 @media (width >= 900px) {
   main .section.accordion-faq-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px 48px;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    column-gap: 64px;
     align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* grid children must not re-center themselves inside their track */
+  main .section.accordion-faq-container > div {
+    max-width: none;
+    margin: 0;
   }
 
   main .section.accordion-faq-container > .default-content-wrapper:first-child {
@@ -18,61 +26,43 @@
     grid-row: 2;
   }
 
-  /* "Need more help?" = right column, aligned to the top */
+  /* "Need more help?" = right column, pinned to the top */
   main .section.accordion-faq-container > .default-content-wrapper:last-child {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+    align-self: start;
   }
 }
 
+/* WKND accordion: flat rows separated by a thin rule, no boxes */
 .accordion-faq details {
-  border: 1px solid #dadada;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.accordion-faq details + details {
-  margin-top: 24px;
-}
-
-.accordion-faq details p {
-  margin-bottom: 0.8em;
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-s);
-  color: var(--text-color);
+  border-bottom: 1px solid #dadada;
 }
 
 .accordion-faq details summary {
   position: relative;
-  padding: 16px;
-  padding-right: 46px;
+  padding: 20px 46px 20px 0;
   cursor: pointer;
   list-style: none;
-  overflow: auto;
-  font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-s);
-  transition: background-color 0.2s;
-}
-
-.accordion-faq details[open] summary {
-  background-color: var(--light-color);
-}
-
-.accordion-faq details summary:focus,
-.accordion-faq details summary:hover {
-  background-color: var(--light-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .accordion-faq details summary::-webkit-details-marker {
   display: none;
 }
 
-/* WKND +/- toggle icon: horizontal bar always, vertical bar hidden when open */
+/* WKND +/- toggle icon on the far right: horizontal bar always,
+   vertical bar hidden when open */
 .accordion-faq details summary::before {
   content: '';
   position: absolute;
   top: 50%;
-  right: 18px;
-  width: 14px;
+  right: 0;
+  width: 16px;
   height: 2px;
   background: currentcolor;
   transform: translateY(-50%);
@@ -82,9 +72,9 @@
   content: '';
   position: absolute;
   top: 50%;
-  right: 24px;
+  right: 7px;
   width: 2px;
-  height: 14px;
+  height: 16px;
   background: currentcolor;
   transform: translateY(-50%);
   transition: opacity 0.2s;
@@ -95,10 +85,12 @@
 }
 
 .accordion-faq details .accordion-faq-item-body {
-  padding: 0 16px;
+  padding: 0 0 16px;
 }
 
-.accordion-faq details[open] .accordion-faq-item-body {
-  border-top: 1px solid #dadada;
-  background-color: var(--background-color);
+.accordion-faq details .accordion-faq-item-body p {
+  margin: 0 0 0.8em;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  color: var(--text-color);
 }

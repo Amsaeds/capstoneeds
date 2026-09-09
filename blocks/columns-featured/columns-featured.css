@@ -36,6 +36,14 @@
   background-color: var(--brand-accent-hover-color);
 }
 
+/* text column: WKND light-grey panel */
+.columns-featured > div > div:not(.columns-featured-img-col) {
+  order: 1;
+  background-color: var(--light-color);
+  padding: 32px 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
 .columns-featured > div > div {
   order: 1;
 }
@@ -50,13 +58,21 @@
 
 @media (width >= 900px) {
   .columns-featured > div {
-    align-items: center;
+    align-items: stretch;
     flex-direction: unset;
-    gap: 24px;
+    gap: 0;
   }
 
   .columns-featured > div > div {
     flex: 1;
     order: unset;
+  }
+
+  /* grey panel: taller inner padding, vertically centered content */
+  .columns-featured > div > div:not(.columns-featured-img-col) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 40px;
   }
 }
