@@ -270,28 +270,76 @@ header nav .nav-locale-list {
   display: none;
 }
 
+/* country rows: flag + (country name over language codes) */
 /* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-locale-list li {
+header nav .nav-locale-list li.nav-locale-country {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   padding: 14px 24px;
-  font-size: var(--body-font-size-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
   border-bottom: 1px solid #333;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-locale-list li:last-child { border-bottom: 0; }
+header nav .nav-locale-list li.nav-locale-country:last-child { border-bottom: 0; }
+
+header nav .nav-locale-flag {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+header nav .nav-locale-flag svg {
+  display: block;
+  width: 26px;
+  height: auto;
+  border: 1px solid rgb(255 255 255 / 20%);
+}
+
+header nav .nav-locale-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+header nav .nav-locale-country-name {
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #bbb;
+}
+
+header nav .nav-locale-codes {
+  display: flex;
+  gap: 12px;
+}
 
 /* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-locale-list li a { color: #fff; }
+header nav .nav-locale-codes a {
+  position: relative;
+  color: #fff;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* thin separators between language codes within a country */
+header nav .nav-locale-codes a + a::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  height: 12px;
+  width: 1px;
+  background: #555;
+  transform: translateY(-50%);
+}
 
 header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
   display: block;
   position: absolute;
   right: 0;
   top: calc(100% + 10px);
-  min-width: 260px;
+  min-width: 280px;
   background: var(--brand-dark-color, #202020);
   border: 1px solid #333;
   box-shadow: 0 8px 24px rgb(0 0 0 / 35%);
@@ -299,12 +347,7 @@ header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-locale-list li:hover {
-  background: #000;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-locale-list li a:hover {
+header nav .nav-locale-codes a:hover {
   color: var(--brand-accent-color);
 }
 

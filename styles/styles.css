@@ -364,21 +364,24 @@ main .section.breadcrumb-nav-container.cards-contributor-container > .default-co
     margin: 0 auto;
   }
 
-  /* lead image + breadcrumb span both columns */
-  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:first-child,
-  main .section.breadcrumb-nav-container.cards-contributor-container > .breadcrumb-nav-wrapper {
+  /* lead image spans both columns at the top */
+  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:first-child {
     grid-column: 1 / -1;
+    grid-row: 1;
   }
 
-  /* article prose + byline = left column */
-  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:nth-of-type(2),
+  /* breadcrumb + article prose + byline + social = left column */
+  main .section.breadcrumb-nav-container.cards-contributor-container > .breadcrumb-nav-wrapper,
+  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:not(:first-child),
   main .section.breadcrumb-nav-container.cards-contributor-container > .cards-contributor-wrapper {
     grid-column: 1;
   }
 
-  /* related-articles sidebar = right column, aligned to the article top */
+  /* "Share This Story" sidebar = right column, pinned to the top of the
+     content (starts at the breadcrumb row, just under the lead image) */
   main .section.breadcrumb-nav-container.cards-contributor-container > .article-list-wrapper {
     grid-column: 2;
-    grid-row: 3 / span 20;
+    grid-row: 2;
+    align-self: start;
   }
 }
