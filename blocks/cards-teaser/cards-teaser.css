@@ -19,19 +19,24 @@
 .cards-teaser .cards-teaser-card-body a:any-link {
   font-size: 18px;
   font-weight: 600;
-  color: var(--link-color);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-color);
   text-decoration: none;
 }
 
-/* description truncated to 3 lines with ellipsis (WKND clamps it) */
+.cards-teaser .cards-teaser-card-body a:hover {
+  color: var(--link-color);
+}
+
+/* description truncated to a single line with ellipsis (matches WKND cards) */
 .cards-teaser .cards-teaser-card-body p {
   margin: 8px 0 0;
   font-size: var(--body-font-size-xs);
-  color: var(--text-color);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #696969;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -1,3 +1,10 @@
+/* full-bleed lead banner (WKND: edge-to-edge, no section gutters) */
+.carousel-image-container .carousel-image-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
 .carousel-image .carousel-image-slides-container {
   position: relative;
 }
@@ -29,7 +36,7 @@
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: min(50vw, calc(100dvh - var(--header-height)));
+  min-height: min(50vw, 400px);
 }
 
 .carousel-image .carousel-image-slide:has(.carousel-image-slide-content[data-align='center']) {
@@ -59,6 +66,11 @@
   background-color: rgb(19 19 19 / 75%);
   position: relative;
   width: var(--slide-content-width, auto);
+}
+
+/* WKND lead banners have no caption — hide the empty overlay box */
+.carousel-image .carousel-image-slide .carousel-image-slide-content:empty {
+  display: none;
 }
 
 .carousel-image .carousel-image-slide-indicators {
