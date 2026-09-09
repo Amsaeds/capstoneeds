@@ -1,3 +1,30 @@
+/* FAQ page layout: accordion + intro (left), "Need more help?" (right sidebar).
+   The section's direct children are: intro DCW, accordion wrapper, help DCW. */
+@media (width >= 900px) {
+  main .section.accordion-faq-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px 48px;
+    align-items: start;
+  }
+
+  main .section.accordion-faq-container > .default-content-wrapper:first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main .section.accordion-faq-container > .accordion-faq-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* "Need more help?" = right column, aligned to the top */
+  main .section.accordion-faq-container > .default-content-wrapper:last-child {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
 .accordion-faq details {
   border: 1px solid #dadada;
 }
