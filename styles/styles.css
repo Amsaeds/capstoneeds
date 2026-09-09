@@ -377,11 +377,14 @@ main .section.breadcrumb-nav-container.cards-contributor-container > .default-co
     grid-column: 1;
   }
 
-  /* "Share This Story" sidebar = right column, pinned to the top of the
-     content (starts at the breadcrumb row, just under the lead image) */
+  /* "Share This Story" sidebar = right column. Span every content row so it
+     never inflates a single row (which would push the article title down).
+     margin:0 overrides the global `.section > div { margin:auto }`, which would
+     otherwise center it vertically; align-self:start pins it under the image. */
   main .section.breadcrumb-nav-container.cards-contributor-container > .article-list-wrapper {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 2 / span 50;
     align-self: start;
+    margin: 0;
   }
 }
