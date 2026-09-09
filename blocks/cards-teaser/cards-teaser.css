@@ -23,9 +23,17 @@
   text-decoration: none;
 }
 
-/* description hidden — cards show image + title only (per design) */
+/* description truncated to 3 lines with ellipsis (WKND clamps it) */
 .cards-teaser .cards-teaser-card-body p {
-  display: none;
+  margin: 8px 0 0;
+  font-size: var(--body-font-size-xs);
+  color: var(--text-color);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cards-teaser .cards-teaser-card-image {

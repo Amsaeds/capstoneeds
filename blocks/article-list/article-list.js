@@ -68,7 +68,12 @@ function buildCard(row) {
     title.textContent = row.title;
     body.append(title);
   }
-  // description intentionally omitted — cards show image + title only (per design)
+  if (row.description) {
+    const desc = document.createElement('p');
+    desc.className = 'article-list-card-description';
+    desc.textContent = row.description;
+    body.append(desc);
+  }
   li.append(body);
   return li;
 }

@@ -74,10 +74,26 @@
   text-decoration: underline;
 }
 
-.article-list .article-list-card-body p {
-  margin: 0;
+.article-list .article-list-card-body p,
+.article-list .article-list-card-description {
+  margin: 8px 0 0;
   font-size: var(--body-font-size-xs);
   color: var(--text-color);
+
+  /* truncate to 3 lines with ellipsis (WKND clamps the description) */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* article-list as a right sidebar (magazine article pages): single column,
+   compact cards stacked vertically */
+main .section.cards-contributor-container .article-list ul {
+  grid-template-columns: 1fr;
+  gap: 24px;
 }
 
 /* graceful state when the query index is not yet available */
