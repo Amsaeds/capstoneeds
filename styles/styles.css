@@ -346,3 +346,18 @@ main .section.dark a:any-link {
   color: #fff;
   text-decoration: underline;
 }
+
+/* magazine article: constrained editorial column. Article-detail pages are the
+   section that has BOTH breadcrumb-nav and cards-contributor (byline). */
+main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper,
+main .section.breadcrumb-nav-container.cards-contributor-container > .breadcrumb-nav-wrapper,
+main .section.breadcrumb-nav-container.cards-contributor-container > .cards-contributor-wrapper {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* first default-content is the full-bleed lead image — keep it wide */
+main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:first-child {
+  max-width: none;
+}
