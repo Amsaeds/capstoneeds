@@ -23,9 +23,9 @@
   text-decoration: none;
 }
 
+/* description hidden — cards show image + title only (per design) */
 .cards-teaser .cards-teaser-card-body p {
-  font-size: var(--body-font-size-xs);
-  color: var(--text-color);
+  display: none;
 }
 
 .cards-teaser .cards-teaser-card-image {

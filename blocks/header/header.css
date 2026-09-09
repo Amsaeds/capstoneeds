@@ -303,23 +303,56 @@ header nav .nav-locale {
   position: relative;
 }
 
+/* Sign In — compact utility link (WKND top-bar style) */
+header nav .nav-tools > p {
+  margin: 0;
+}
+
+header nav .nav-tools > p a:any-link {
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header nav .nav-tools > p a:hover {
+  text-decoration: underline;
+}
+
+/* locale selector — globe cue + compact toggle (WKND) */
 header nav .nav-locale-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin: 0;
   border: 1px solid #ccc;
   border-radius: 0;
   padding: 6px 12px;
   background: transparent;
-  color: inherit;
+  color: var(--text-color);
   font: inherit;
   font-size: var(--body-font-size-xs);
+  font-weight: 600;
   cursor: pointer;
   text-transform: none;
+}
+
+/* globe glyph before the locale label */
+header nav .nav-locale-toggle::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentcolor;
+  border-radius: 50%;
+  background:
+    linear-gradient(currentcolor, currentcolor) center / 14px 1.5px no-repeat,
+    linear-gradient(currentcolor, currentcolor) center / 1.5px 14px no-repeat;
 }
 
 header nav .nav-locale-toggle::after {
   content: '';
   display: inline-block;
-  margin-left: 8px;
   width: 6px;
   height: 6px;
   border: 2px solid currentcolor;
