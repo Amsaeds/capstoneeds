@@ -19,9 +19,13 @@
     grid-column: 1;
   }
 
-  /* tabbed body = right column */
+  /* tabbed body = right column, pinned to the top. margin:0 overrides the
+     global `.section > div { margin:auto }`, which would otherwise vertically
+     center the tabs when the active panel is shorter than the metadata column. */
   main .section.tabs-info-container > .tabs-info-wrapper {
     grid-column: 2;
+    align-self: start;
+    margin: 0;
   }
 }
 
