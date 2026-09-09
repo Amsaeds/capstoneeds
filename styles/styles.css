@@ -347,17 +347,38 @@ main .section.dark a:any-link {
   text-decoration: underline;
 }
 
-/* magazine article: constrained editorial column. Article-detail pages are the
-   section that has BOTH breadcrumb-nav and cards-contributor (byline). */
-main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper,
-main .section.breadcrumb-nav-container.cards-contributor-container > .breadcrumb-nav-wrapper,
-main .section.breadcrumb-nav-container.cards-contributor-container > .cards-contributor-wrapper {
-  max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* first default-content is the full-bleed lead image — keep it wide */
+/* magazine article: editorial column + related-articles sidebar.
+   Article-detail pages are the section with BOTH breadcrumb-nav and
+   cards-contributor (byline). Lead hero image stays full-width. */
 main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:first-child {
   max-width: none;
+}
+
+@media (width >= 900px) {
+  main .section.breadcrumb-nav-container.cards-contributor-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    column-gap: 48px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* lead image + breadcrumb span both columns */
+  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:first-child,
+  main .section.breadcrumb-nav-container.cards-contributor-container > .breadcrumb-nav-wrapper {
+    grid-column: 1 / -1;
+  }
+
+  /* article prose + byline = left column */
+  main .section.breadcrumb-nav-container.cards-contributor-container > .default-content-wrapper:nth-of-type(2),
+  main .section.breadcrumb-nav-container.cards-contributor-container > .cards-contributor-wrapper {
+    grid-column: 1;
+  }
+
+  /* related-articles sidebar = right column, aligned to the article top */
+  main .section.breadcrumb-nav-container.cards-contributor-container > .article-list-wrapper {
+    grid-column: 2;
+    grid-row: 3 / span 20;
+  }
 }
