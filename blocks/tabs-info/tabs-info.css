@@ -14,9 +14,13 @@
     grid-column: 1 / -1;
   }
 
-  /* metadata block = left column */
+  /* metadata block = left column, pinned to the top (margin:0 overrides the
+     global `.section > div { margin:auto }`, which would otherwise center it
+     vertically when the tabbed body on the right is taller). */
   main .section.tabs-info-container > .default-content-wrapper {
     grid-column: 1;
+    align-self: start;
+    margin: 0;
   }
 
   /* tabbed body = right column, pinned to the top. margin:0 overrides the
