@@ -25,9 +25,32 @@ function toggleExpanded(el, force) {
 }
 
 /**
- * Build the header search form. Controls are created in JS (not the fragment)
- * per the nav content contract.
- * @returns {Element} the search form
+ * Detect the current page's locale prefix (e.g. "/ca/en") from the path.
+ * @returns {string} locale prefix, or '' when none
+ */
+function currentLocale() {
+  const m = window.location.pathname.match(/^\/([a-z]{2})\/([a-z]{2})(?=\/|$)/);
+  return m ? `/${m[1]}/${m[2]}` : '';
+}
+
+/**
+ * Rewrite an in-site nav href to the current page's locale.
+ * "/us/en/magazine" on a /ca/en page becomes "/ca/en/magazine".
+ * @param {string} href
+ * @param {string} locale current locale prefix
+ * @returns {string}
+ */
+function localizeHref(href, locale) {
+  if (!locale || !href.startsWith('/')) return href;
+  const m = href.match(/^\/[a-z]{2}\/[a-z]{2}(\/.*)?$/);
+  if (!m) return href;
+  const rest = m[1] || '';
+  return `${locale}${rest}`;
+}
+
+/**
+ * Build the header search form.
+ * @returns {Element}
  */
 function buildSearch() {
   const form = document.createElement('form');
@@ -54,12 +77,13 @@ export default async function decorate(block) {
   nav.setAttribute('aria-label', 'Main navigation');
   while (fragment.body.firstElementChild) nav.append(fragment.body.firstElementChild);
 
-  // three sections: brand, sections (main nav), tools (locale)
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
+  // three sections: brand, sections (main nav), tools (sign-in + locale)
+  ['brand', 'sections', 'tools'].forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
   });
+
+  const locale = currentLocale();
 
   // brand: strip button decoration from the logo link
   const navBrand = nav.querySelector('.nav-brand');
@@ -70,25 +94,29 @@ export default async function decorate(block) {
       const container = brandLink.closest('.button-container');
       if (container) container.className = '';
     }
+    const logoAnchor = navBrand.querySelector('a');
+    if (logoAnchor && locale) logoAnchor.href = locale || '/';
   }
 
-  // main nav sections: highlight current page
+  // main nav: localize hrefs to the current locale + highlight current page
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     const here = window.location.pathname;
     navSections.querySelectorAll(':scope a').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (href) a.href = localizeHref(href, locale);
       if (a.getAttribute('href') === here) a.setAttribute('aria-current', 'page');
     });
   }
 
-  // tools: turn the locale list into a click dropdown + add search
+  // tools: sign-in link + locale dropdown (moved to the top utility bar)
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     const localeList = navTools.querySelector('ul');
     if (localeList) {
       const wrapper = document.createElement('div');
       wrapper.className = 'nav-locale';
-      const current = localeList.querySelector('a[href$="/us/en"]')
+      const current = localeList.querySelector(`a[href$="${locale || '/us/en'}"]`)
         || localeList.querySelector('a');
       const currentLabel = current ? current.textContent.trim() : 'en-US';
       const toggle = document.createElement('button');
@@ -101,12 +129,10 @@ export default async function decorate(block) {
       wrapper.append(toggle, localeList);
       navTools.append(wrapper);
       toggle.addEventListener('click', () => toggleExpanded(toggle));
-      // close on outside click
       document.addEventListener('click', (e) => {
         if (!wrapper.contains(e.target)) toggle.setAttribute('aria-expanded', 'false');
       });
     }
-    navTools.prepend(buildSearch());
   }
 
   // hamburger for mobile
@@ -125,7 +151,9 @@ export default async function decorate(block) {
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
 
-  // close mobile menu / reset on resize to desktop
+  // search sits in the main bar (with brand + sections)
+  if (navSections) navSections.append(buildSearch());
+
   isDesktop.addEventListener('change', () => {
     nav.setAttribute('aria-expanded', 'false');
     hamburgerBtn.setAttribute('aria-label', 'Open navigation');
@@ -133,6 +161,15 @@ export default async function decorate(block) {
     const localeToggle = nav.querySelector('.nav-locale-toggle');
     if (localeToggle) localeToggle.setAttribute('aria-expanded', 'false');
   });
+
+  // group the main-bar items (hamburger + brand + sections) into one row so the
+  // black utility bar (tools) can sit above it as a separate full-width band
+  const mainRow = document.createElement('div');
+  mainRow.className = 'nav-main-row';
+  [nav.querySelector('.nav-hamburger'), navBrand, navSections]
+    .filter(Boolean)
+    .forEach((el) => mainRow.append(el));
+  nav.append(mainRow);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
