@@ -49,7 +49,26 @@ function formatDate(value) {
 }
 
 /**
+ * Fetch a page's <meta name="date"> value (fallback when the query index does
+ * not carry a date column). Returns '' on any failure.
+ * @param {string} path
+ * @returns {Promise<string>}
+ */
+async function fetchPageDate(path) {
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) return '';
+    const html = await resp.text();
+    const m = html.match(/<meta\s+name="date"\s+content="([^"]*)"/i);
+    return m ? m[1] : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+/**
  * Build one "share this story" row (title + optional date, no image).
+ * The date span is populated later (async) when a date is available.
  * @param {{path:string, title:string, date:string}} row
  * @returns {Element}
  */
@@ -62,13 +81,12 @@ function buildShareItem(row) {
   title.className = 'article-list-share-title';
   title.textContent = row.title || '';
   a.append(title);
+  const date = document.createElement('span');
+  date.className = 'article-list-share-date';
   const dateText = formatDate(row.date);
-  if (dateText) {
-    const date = document.createElement('span');
-    date.className = 'article-list-share-date';
-    date.textContent = dateText;
-    a.append(date);
-  }
+  if (dateText) date.textContent = dateText;
+  else date.hidden = true;
+  a.append(date);
   li.append(a);
   return li;
 }
@@ -186,6 +204,17 @@ export default async function decorate(block) {
     const ul = document.createElement('ul');
     rows.forEach((row) => ul.append(buildShareItem(row)));
     block.append(heading, ul);
+    // fill in dates the query index lacks by reading each page's date meta
+    rows.forEach(async (row, i) => {
+      if (formatDate(row.date)) return;
+      const dateEl = ul.children[i]?.querySelector('.article-list-share-date');
+      if (!dateEl) return;
+      const text = formatDate(await fetchPageDate(row.path));
+      if (text) {
+        dateEl.textContent = text;
+        dateEl.hidden = false;
+      }
+    });
     return;
   }
 

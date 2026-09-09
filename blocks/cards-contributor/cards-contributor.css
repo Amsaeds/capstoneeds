@@ -77,3 +77,31 @@
   background-color: var(--brand-accent-color);
   color: var(--text-color);
 }
+
+/* ---- article byline: horizontal row (portrait + name left, social right) ---- */
+.cards-contributor.cards-contributor-byline > ul {
+  display: block;
+  border-top: 1px solid #dadada;
+  padding-top: 32px;
+}
+
+.cards-contributor.cards-contributor-byline > ul > li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+}
+
+.cards-contributor.cards-contributor-byline .cards-contributor-card-image img {
+  width: 72px;
+  height: 72px;
+}
+
+.cards-contributor.cards-contributor-byline .cards-contributor-card-body {
+  margin: 0;
+}
+
+/* push social icons to the far right of the byline row */
+.cards-contributor.cards-contributor-byline .cards-contributor-social {
+  margin: 0 0 0 auto;
+}

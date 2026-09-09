@@ -20,6 +20,60 @@ function detectNetwork(a) {
   return null;
 }
 
+/**
+ * On magazine article pages the contributor is a single "byline": the source
+ * splits the portrait and the name/role across two list items, and the social
+ * links live in a sibling paragraph group. Reshape that into one horizontal
+ * row (portrait + name/role on the left, social icons on the right).
+ * @param {Element} block
+ * @param {Element} ul
+ */
+function decorateByline(block, ul) {
+  const items = [...ul.children];
+  if (items.length !== 2) return;
+  const imgItem = items.find((li) => li.querySelector('picture, img') && !li.querySelector('h3'));
+  const textItem = items.find((li) => li.querySelector('h3'));
+  if (!imgItem || !textItem || imgItem === textItem) return;
+
+  block.classList.add('cards-contributor-byline');
+
+  // single row: portrait + name/role
+  const row = document.createElement('li');
+  const picWrap = imgItem.querySelector('.cards-contributor-card-image') || imgItem;
+  const body = textItem.querySelector('.cards-contributor-card-body:has(h3)')
+    || textItem.querySelector('.cards-contributor-card-body') || textItem;
+  const pic = picWrap.querySelector('picture, img');
+  if (pic) {
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'cards-contributor-card-image';
+    imageDiv.append(pic);
+    row.append(imageDiv);
+  }
+  body.className = 'cards-contributor-card-body';
+  row.append(body);
+
+  // absorb the social links that follow the block (sibling default content)
+  const wrapper = block.closest('.cards-contributor-wrapper');
+  const next = wrapper ? wrapper.nextElementSibling : null;
+  if (next && next.classList.contains('default-content-wrapper')) {
+    const links = [...next.querySelectorAll('a')].filter((a) => detectNetwork(a));
+    if (links.length) {
+      const social = document.createElement('div');
+      social.className = 'cards-contributor-social';
+      links.forEach((a) => {
+        const network = detectNetwork(a);
+        a.setAttribute('aria-label', a.textContent.trim() || network);
+        a.innerHTML = SOCIAL_ICONS[network];
+        social.append(a);
+      });
+      row.append(social);
+      next.remove();
+    }
+  }
+
+  ul.replaceChildren(row);
+}
+
 export default function decorate(block) {
   /* change to ul, li */
   const ul = document.createElement('ul');
@@ -53,4 +107,6 @@ export default function decorate(block) {
   });
   block.textContent = '';
   block.append(ul);
+
+  decorateByline(block, ul);
 }

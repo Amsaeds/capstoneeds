@@ -48,6 +48,74 @@ function localizeHref(href, locale) {
   return `${locale}${rest}`;
 }
 
+// Simple inline SVG flags (emoji flags don't render on Windows). viewBox 0 0 24 16.
+const FLAGS = {
+  us: '<svg viewBox="0 0 24 16"><rect width="24" height="16" fill="#fff"/><g fill="#b22234"><rect width="24" height="1.23"/><rect y="2.46" width="24" height="1.23"/><rect y="4.92" width="24" height="1.23"/><rect y="7.38" width="24" height="1.23"/><rect y="9.85" width="24" height="1.23"/><rect y="12.31" width="24" height="1.23"/><rect y="14.77" width="24" height="1.23"/></g><rect width="10" height="8.62" fill="#3c3b6e"/></svg>',
+  ca: '<svg viewBox="0 0 24 16"><rect width="24" height="16" fill="#fff"/><rect width="6" height="16" fill="#d52b1e"/><rect x="18" width="6" height="16" fill="#d52b1e"/><path fill="#d52b1e" d="M12 4l.7 1.9 2-.3-1 1.7 1 .6-2 .5.1 1.3-1.8-1-1.8 1 .1-1.3-2-.5 1-.6-1-1.7 2 .3z"/></svg>',
+  ch: '<svg viewBox="0 0 24 16"><rect width="24" height="16" fill="#d52b1e"/><rect x="10.5" y="4" width="3" height="8" fill="#fff"/><rect x="8" y="6.5" width="8" height="3" fill="#fff"/></svg>',
+  de: '<svg viewBox="0 0 24 16"><rect width="24" height="5.33" fill="#000"/><rect y="5.33" width="24" height="5.33" fill="#d00"/><rect y="10.66" width="24" height="5.34" fill="#ffce00"/></svg>',
+  fr: '<svg viewBox="0 0 24 16"><rect width="8" height="16" fill="#0055a4"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ef4135"/></svg>',
+  es: '<svg viewBox="0 0 24 16"><rect width="24" height="16" fill="#c60b1e"/><rect y="4" width="24" height="8" fill="#ffc400"/></svg>',
+  it: '<svg viewBox="0 0 24 16"><rect width="8" height="16" fill="#009246"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ce2b37"/></svg>',
+};
+
+// Country metadata keyed by the 2-letter country segment of the locale path.
+const COUNTRIES = {
+  us: { name: 'United States' },
+  ca: { name: 'Canada' },
+  ch: { name: 'Switzerland' },
+  de: { name: 'Germany' },
+  fr: { name: 'France' },
+  es: { name: 'Spain' },
+  it: { name: 'Italy' },
+};
+
+/**
+ * Reshape the flat list of locale links into WKND-style country rows: each row
+ * shows a flag + country name, then its language/locale links underneath.
+ * @param {Element} localeList the <ul> of locale <a> links
+ */
+function decorateLocaleFlags(localeList) {
+  const links = [...localeList.querySelectorAll('a')];
+  const groups = new Map();
+  links.forEach((a) => {
+    const href = a.getAttribute('href') || '';
+    const m = href.match(/^\/([a-z]{2})\//);
+    const country = m ? m[1] : 'us';
+    if (!groups.has(country)) groups.set(country, []);
+    groups.get(country).push(a);
+  });
+
+  localeList.textContent = '';
+  groups.forEach((countryLinks, country) => {
+    const meta = COUNTRIES[country] || { name: country.toUpperCase() };
+    const li = document.createElement('li');
+    li.className = 'nav-locale-country';
+
+    const flag = document.createElement('span');
+    flag.className = 'nav-locale-flag';
+    flag.innerHTML = FLAGS[country] || '';
+    flag.setAttribute('aria-hidden', 'true');
+
+    const details = document.createElement('div');
+    details.className = 'nav-locale-details';
+    const name = document.createElement('span');
+    name.className = 'nav-locale-country-name';
+    name.textContent = meta.name;
+    const codes = document.createElement('span');
+    codes.className = 'nav-locale-codes';
+    countryLinks.forEach((a) => {
+      // display code as EN-US (uppercase, "lang-COUNTRY")
+      const label = a.textContent.trim();
+      a.textContent = label.toUpperCase();
+      codes.append(a);
+    });
+    details.append(name, codes);
+    li.append(flag, details);
+    localeList.append(li);
+  });
+}
+
 /**
  * Build the header search form.
  * @returns {Element}
@@ -114,6 +182,7 @@ export default async function decorate(block) {
   if (navTools) {
     const localeList = navTools.querySelector('ul');
     if (localeList) {
+      decorateLocaleFlags(localeList);
       const wrapper = document.createElement('div');
       wrapper.className = 'nav-locale';
       const current = localeList.querySelector(`a[href$="${locale || '/us/en'}"]`)
