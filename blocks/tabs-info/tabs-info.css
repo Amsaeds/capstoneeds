@@ -1,3 +1,62 @@
+/* Adventure detail: metadata sidebar (left) + tabbed body (right).
+   Section children: breadcrumb, carousel, default-content (title + meta), tabs. */
+@media (width >= 900px) {
+  main .section.tabs-info-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  /* full-width rows: breadcrumb + carousel span both columns */
+  main .section.tabs-info-container > .breadcrumb-nav-wrapper,
+  main .section.tabs-info-container > .carousel-image-wrapper {
+    grid-column: 1 / -1;
+  }
+
+  /* metadata block = left column */
+  main .section.tabs-info-container > .default-content-wrapper {
+    grid-column: 1;
+  }
+
+  /* tabbed body = right column */
+  main .section.tabs-info-container > .tabs-info-wrapper {
+    grid-column: 2;
+  }
+}
+
+/* metadata list styling: no bullets, left-border accent, uppercase labels */
+main .section.tabs-info-container > .default-content-wrapper ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main .section.tabs-info-container > .default-content-wrapper ul > li {
+  border-left: 2px solid #dadada;
+  padding: 4px 0 4px 16px;
+  margin-bottom: 24px;
+}
+
+main .section.tabs-info-container > .default-content-wrapper ul > li p {
+  margin: 0;
+}
+
+/* label (first line): small uppercase muted */
+main .section.tabs-info-container > .default-content-wrapper ul > li p:first-child {
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #767676;
+  margin-bottom: 4px;
+}
+
+/* value (second line): bold */
+main .section.tabs-info-container > .default-content-wrapper ul > li p:last-child {
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+}
+
 .tabs-info .tabs-info-list {
   display: flex;
   gap: 0.5ch;
@@ -35,6 +94,7 @@
   transition: background-color 0.2s;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .tabs-info .tabs-info-list button p {
   margin: 0;
 }
