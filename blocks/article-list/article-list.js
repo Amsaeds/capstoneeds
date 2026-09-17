@@ -187,10 +187,13 @@ function buildCard(row) {
 function buildTabs(categories, ul) {
   const nav = document.createElement('div');
   nav.className = 'article-list-tabs';
+  nav.setAttribute('role', 'tablist');
+  nav.setAttribute('aria-label', 'Filter by category');
   const labels = ['All', ...categories];
   labels.forEach((label, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
+    btn.setAttribute('role', 'tab');
     btn.textContent = label;
     btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
     btn.addEventListener('click', () => {

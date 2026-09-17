@@ -146,6 +146,24 @@ function decorateButtons(main) {
  * Decorates the main element.
  * @param {Element} main The main element
  */
+/**
+ * Fix skipped heading levels for accessibility (WCAG heading-order) without
+ * changing the visual size: keep each heading's tag but set aria-level to the
+ * correct sequential value so it never jumps more than one level below the
+ * previous heading. Authored content sometimes uses e.g. h1 then h3/h4.
+ * @param {Element} main
+ */
+function normalizeHeadingLevels(main) {
+  const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  let prev = 0;
+  headings.forEach((h) => {
+    const actual = parseInt(h.tagName.substring(1), 10);
+    const level = prev === 0 ? actual : Math.min(actual, prev + 1);
+    if (level !== actual) h.setAttribute('aria-level', String(level));
+    prev = level;
+  });
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   decorateIcons(main);
@@ -153,6 +171,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  normalizeHeadingLevels(main);
 }
 
 /**
