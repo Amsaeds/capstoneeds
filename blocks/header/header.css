@@ -42,6 +42,7 @@ header nav .nav-tools {
 
 /* main bar row: brand (left) + sections/search (right) */
 header nav .nav-main-row {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
