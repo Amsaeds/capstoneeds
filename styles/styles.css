@@ -38,8 +38,9 @@
   --heading-font-size-s: var(--brand-heading-size-s-mobile);
   --heading-font-size-xs: var(--brand-heading-size-xs-mobile);
 
-  /* nav height */
-  --nav-height: var(--brand-nav-height);
+  /* nav height — reserve the real two-band header height (black utility bar +
+     main bar) so client-side header load doesn't push main down (CLS). */
+  --nav-height: 154px;
 }
 
 /* fallback fonts */
@@ -164,6 +165,13 @@ a:any-link {
 
 a:hover {
   color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* inline links inside body copy must not rely on color alone (a11y):
+   underline links within a paragraph, excluding button CTAs */
+/* stylelint-disable-next-line no-descending-specificity */
+main .default-content-wrapper p a:any-link:not(.button) {
   text-decoration: underline;
 }
 
@@ -342,6 +350,7 @@ main .section.dark {
   padding: 40px 0;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 main .section.dark a:any-link {
   color: #fff;
   text-decoration: underline;

@@ -29,6 +29,18 @@
   cursor: default;
 }
 
+/* reserve vertical space while the cards render client-side, so the grid
+   doesn't expand from zero height and shift the page (CLS). Listing pages
+   (article-list is the section's main block) hold many cards, so reserve a
+   tall placeholder; home rails are limited to 4 and need less. */
+.article-list:not([data-block-status="loaded"]) {
+  min-height: 60vh;
+}
+
+main .section.article-list-container > .article-list-wrapper .article-list:not([data-block-status="loaded"]) {
+  min-height: 300vh;
+}
+
 .article-list ul {
   list-style: none;
   margin: 0;
