@@ -4,13 +4,14 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  * Read "key | value" configuration rows from the block, then remove them.
  * Supported keys: path (prefix filter), limit (max cards), exclude (path to skip),
  * tabs (comma-separated category labels — renders a filter tab bar),
- * mode ("share" renders a "Share This Story" title+date list, no images).
+ * mode ("share" renders a "Share This Story" title+date list, no images),
+ * sort ("date" orders newest-first so freshly published articles surface).
  * @param {Element} block
- * @returns {{path:string, limit:number, exclude:string, tabs:string[], mode:string}}
+ * @returns {{path:string, limit:number, exclude:string, tabs:string[], mode:string, sort:string}}
  */
 function readConfig(block) {
   const cfg = {
-    path: '', limit: 0, exclude: '', tabs: [], mode: '',
+    path: '', limit: 0, exclude: '', tabs: [], mode: '', sort: '',
   };
   [...block.children].forEach((row) => {
     const cells = row.children;
@@ -22,8 +23,57 @@ function readConfig(block) {
     else if (key === 'exclude') cfg.exclude = value;
     else if (key === 'tabs') cfg.tabs = value.split(',').map((t) => t.trim()).filter(Boolean);
     else if (key === 'mode') cfg.mode = value.toLowerCase();
+    else if (key === 'sort') cfg.sort = value.toLowerCase();
   });
   return cfg;
+}
+
+/**
+ * Fetch a page's <meta name="date"> value (fallback when the query index does
+ * not carry a date column). Returns '' on any failure.
+ * @param {string} path
+ * @returns {Promise<string>}
+ */
+async function fetchPageDate(path) {
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) return '';
+    const html = await resp.text();
+    const m = html.match(/<meta\s+name="date"\s+content="([^"]*)"/i);
+    return m ? m[1] : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+/**
+ * Parse an index/meta date value to epoch milliseconds (0 when unusable).
+ * @param {string|number} value
+ * @returns {number}
+ */
+function dateToMs(value) {
+  if (!value) return 0;
+  const num = Number(value);
+  if (!Number.isNaN(num) && num > 0) return num < 1e12 ? num * 1000 : num;
+  const t = new Date(value).getTime();
+  return Number.isNaN(t) ? 0 : t;
+}
+
+/**
+ * Order rows newest-first by date. The query index date column is often empty,
+ * so fall back to each page's <meta name="date"> (fetched in parallel). Rows
+ * without any date keep their original relative order after the dated ones.
+ * @param {Array} rows
+ * @returns {Promise<Array>}
+ */
+async function sortByDateDesc(rows) {
+  const dated = await Promise.all(rows.map(async (row, i) => {
+    let ms = dateToMs(row.date);
+    if (!ms) ms = dateToMs(await fetchPageDate(row.path));
+    return { row, ms, i };
+  }));
+  dated.sort((a, b) => (b.ms - a.ms) || (a.i - b.i));
+  return dated.map((d) => d.row);
 }
 
 /**
@@ -46,24 +96,6 @@ function formatDate(value) {
   return d.toLocaleDateString('en-US', {
     weekday: 'long', day: 'numeric', month: 'short', year: 'numeric',
   });
-}
-
-/**
- * Fetch a page's <meta name="date"> value (fallback when the query index does
- * not carry a date column). Returns '' on any failure.
- * @param {string} path
- * @returns {Promise<string>}
- */
-async function fetchPageDate(path) {
-  try {
-    const resp = await fetch(path);
-    if (!resp.ok) return '';
-    const html = await resp.text();
-    const m = html.match(/<meta\s+name="date"\s+content="([^"]*)"/i);
-    return m ? m[1] : '';
-  } catch (e) {
-    return '';
-  }
 }
 
 /**
@@ -188,6 +220,9 @@ export default async function decorate(block) {
     if (row.path === here || row.path === cfg.path || row.path === `${cfg.path}/`) return false;
     return true;
   });
+
+  // order newest-first before limiting, so recently published articles surface
+  if (cfg.sort === 'date') rows = await sortByDateDesc(rows);
 
   if (cfg.limit > 0) rows = rows.slice(0, cfg.limit);
 
